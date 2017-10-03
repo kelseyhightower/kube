@@ -1,0 +1,17 @@
+#!/bin/bash
+
+gcloud compute instances create kube \
+  --async \
+  --can-ip-forward \
+  --image-family ubuntu-1704 \
+  --image-project ubuntu-os-cloud \
+  --machine-type n1-standard-8 \
+  --metadata kubernetes-version=stable-1.8 \
+  --metadata-from-file startup-script=startup.sh \
+  --tags kube \
+  --scopes cloud-platform,logging-write
+
+gcloud compute firewall-rules create default-allow-kube \
+  --allow tcp:6443 \
+  --target-tags kube \
+  --source-ranges 0.0.0.0/0

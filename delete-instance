@@ -1,0 +1,4 @@
+#!/bin/bash
+
+gcloud -q compute instances delete kube
+gcloud compute firewall-rules delete default-allow-kube
